@@ -1,0 +1,65 @@
+{% extends 'profile_sidebar.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="box-panel p-4 mt-4">
+          <h2 class="text-center mb-4">Edit Apartment Details</h2>
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {% if field.name == 'image' %}
+                  <div class="input-group mb-2">
+                    <div class="custom-file">
+                      {{ field|add_class:'custom-file-input' }}
+                      <label class="custom-file-label" for="{{ field.id_for_label }}">Choose file</label>
+                    </div>
+                  </div>
+                  {% if form.instance.image %}
+                    <img id="image-preview" src="{{ form.instance.image.url }}" alt="Image Preview" class="img-thumbnail mt-2" style="max-width: 200px;">
+                  {% else %}
+                    <img id="image-preview" src="" alt="Image Preview" class="img-thumbnail mt-2" style="max-width: 200px; display: none;">
+                  {% endif %}
+                  <script>
+                    document.querySelector('#{{ field.id_for_label }}').addEventListener('change', function(e) {
+                      var reader = new FileReader();
+                      reader.onload = function (event) {
+                        document.querySelector('#image-preview').src = event.target.result;
+                        document.querySelector('#image-preview').style.display = 'block';
+                      };
+                      reader.readAsDataURL(e.target.files[0]);
+                    });
+                  </script>
+                {% else %}
+                  {{ field|add_class:'form-control mb-2' }}
+                {% endif %}
+              </div>
+            {% endfor %}
+            {% for field in form.address_form %}
+                <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field|add_class:'form-control mb-2' }}
+                </div>
+            {% endfor %}
+            {% for field in form.rent_detail_form %}
+                <div class="form-group">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field|add_class:'form-control mb-2' }}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

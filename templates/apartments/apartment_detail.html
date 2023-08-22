@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ apartment.title }}</h5>
+            <img src="{{ apartment.image.url }}" alt="Apartment Image" class="card-img-top">
+            <p class="card-text">Size: {{ apartment.size }} | Beds: {{ apartment.beds }} | Bathrooms: {{ apartment.bathrooms }}</p>
+            <div>
+              <h6>Address:</h6>
+              <p>Street: {{ apartment.address.street }}</p>
+              <p>Zip Code: {{ apartment.address.zipcode }}</p>
+              <p>City: {{ apartment.address.city }}</p>
+            </div>
+            {% if apartment.for_rent %}
+              <p class="card-text">Status: Available for Rent</p>
+              <h6>Rent Details:</h6>
+              <ul>
+                <li>Description: {{ apartment.rent_detail.description }}</li>
+                <li>Prepayment: {{ apartment.rent_detail.prepayment }}</li>
+                <li>Monthly Fee: {{ apartment.rent_detail.monthly_fee }}</li>
+              </ul>
+              {% if user.is_authenticated and can_send_offer %}
+                <form id="send-offer-form" action="{% url 'send_offer' apartment.id %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary">Send Offer</button>
+                </form>
+              {% elif user.is_authenticated and user != apartment.owner %}
+                <p class="text-success">You have already sent an offer for this apartment.</p>
+              {% endif %}
+            {% else %}
+              <p class="card-text">Status: Not Available for Rent</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

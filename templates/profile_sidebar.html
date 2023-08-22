@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      {% block main_content %}
+      <!-- Main content -->
+      {% endblock %}    
+    </div>
+    <div class="col-md-3">
+      <div class="sidebar">
+        <h3>Hey</h3>
+        <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+        <div>
+          <a href="{% url 'add_apartment' %}" class="btn btn-secondary btn-sidebar">Add Apartment</a>
+          <a href="{% url 'my_apartments' %}" class="btn btn-secondary btn-sidebar">My Apartments</a>
+          <a href="{% url 'offer_list' %}" class="btn btn-secondary btn-sidebar">Offers</a>
+          <a href="{% url 'rented_apartments' %}" class="btn btn-secondary btn-sidebar">Rented Apartments</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

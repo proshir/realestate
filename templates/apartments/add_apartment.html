@@ -1,0 +1,55 @@
+{% extends 'profile_sidebar.html' %}
+{% load widget_tweaks %}
+
+{% block main_content %}
+  <div class="box-panel p-4 mt-4">
+    <h2 class="text-center mb-4">Add Apartment</h2>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    <form action="" id="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {% if field.name == 'image' %}
+            <div class="custom-file mb-2">
+              {{ field|add_class:'custom-file-input' }}
+              <label class="custom-file-label" for="{{ field.id_for_label }}">Choose file</label>
+            </div>
+            <div class="image-preview-container">
+              <img id="image-preview" src="" alt="Image Preview" class="img-thumbnail mt-2" style="max-width: 200px; display: none;">
+            </div>
+            <script>
+              document.querySelector('#{{ field.id_for_label }}').addEventListener('change', function(e) {
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                  document.querySelector('#image-preview').src = event.target.result;
+                  document.querySelector('#image-preview').style.display = 'block';
+                };
+                reader.readAsDataURL(e.target.files[0]);
+              });
+            </script>
+          {% else %}
+            {{ field|add_class:'form-control mb-2' }}
+          {% endif %}
+        </div>
+      {% endfor %}
+      {% for field in form.address_form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {{ field|add_class:'form-control mb-2' }}
+        </div>
+      {% endfor %}
+      {% for field in form.rent_detail_form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {{ field|add_class:'form-control mb-2' }}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary mt-3">Add Apartment</button>
+    </form>
+  </div>
+{% endblock %}

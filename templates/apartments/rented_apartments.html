@@ -1,0 +1,31 @@
+{% extends 'profile_sidebar.html' %}
+
+{% block main_content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Rented Apartments</h2>
+      <hr>
+      <div class="row">
+        {% for apartment in apartments %}
+          <div class="col-md-4">
+            <div class="card mb-4">
+              <a class='taga' href="{% url 'apartment_detail' apartment.id %}">
+                <div class="card-img-zoom">
+                  <img src="{{ apartment.image.url }}" class="card-img-top" alt="Apartment Image">
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ apartment.title }}</h5>
+                  <p class="card-text">
+                    Size: {{ apartment.size }} | Beds: {{ apartment.beds }} | Bathrooms: {{ apartment.bathrooms }}
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

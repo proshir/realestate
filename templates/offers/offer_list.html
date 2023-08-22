@@ -1,0 +1,29 @@
+{% extends 'profile_sidebar.html' %}
+
+{% block content %}
+  <div class="container">
+    <h2>Offers</h2>
+    {% if offers %}
+      <div class="list-group">
+        {% for offer in offers %}
+          <div class="list-group-item">
+            <div class="row">
+              <div class="col-md-8">
+                <h5 class="mb-1">Tenant: {{ offer.tenant }}</h5>
+                <p class="mb-1">Rent Details: {{ offer.rent_detail }}</p>
+              </div>
+              <div class="col-md-4 text-md-end">
+                <form action="{% url 'accept_offer' offer.id %}" method="POST" class="d-inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary">Accept Offer</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No offers available.</p>
+    {% endif %}
+  </div>
+{% endblock %}
