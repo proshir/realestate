@@ -38,3 +38,8 @@ In the list on the main page, if the user chooses a house that is not for him, h
 ![Register](https://github.com/proshir/realestate/assets/19504971/77fa9932-1800-48bc-9f12-859a3f6ef9a7)
 #### Apartment Detail
 ![Apartment Detail](https://github.com/proshir/realestate/assets/19504971/294a3eb9-98db-4937-8d59-b11a852b5fb5)
+
+## Diagrams
+![sequence diagram](https://github.com/proshir/realestate/assets/19504971/81e60c40-74b0-48f8-adcd-6f92197cd9a6)
+### Class Diagram
+![class diagram](https://github.com/proshir/realestate/assets/19504971/16500519-0d1e-4302-be30-e6fedc456742)
